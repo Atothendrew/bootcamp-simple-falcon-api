@@ -14,6 +14,7 @@ $(info API_PORT set to $(API_PORT))
 stop: _kill_gunicorn _docker_stop_api_detached
 
 run: _kill_gunicorn _setup_virtual_env _run_gunicorn_detached
+	@echo "The API is still running, kill it with 'make stop'"
 
 run-docker: _create_env_file _docker_run_api_detached _remove_env_file
 	docker ps | grep hello_world
@@ -21,7 +22,7 @@ run-docker: _create_env_file _docker_run_api_detached _remove_env_file
 	docker ps | grep hello_world
 	@echo "The API is still running, kill it with 'make stop'"
 
-test: run _pytest_local stop
+test: run _pytest_local _kill_gunicorn
 
 test-docker: _create_env_file _pytest_docker _remove_env_file
 
@@ -54,7 +55,7 @@ _setup_virtual_env:
 	venv/bin/python setup.py clean --all install clean --all
 
 _docker_stop_api_detached:
-	docker-compose down
+	docker-compose down || echo "Eyes up, check docker logs"
 
 _kill_gunicorn:
 	pkill -9 -f "venv/bin/gunicorn" >/dev/null 2>&1 && echo "killed local gunicorn" || echo "No local gunicorn process"
