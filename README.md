@@ -15,8 +15,8 @@ make run
  
 ## Containerize it! 
 
-1. Author a Dockerfile -
-> A Dockerfile is a list of instructions that tells Docker how to build your image
+1. Author a Dockerfile
+    > A Dockerfile is a list of instructions that tells Docker how to build your image
 
 2. Build your image
    * Once you have a dockerfile, run something like `docker build --tag <name of image:version>`
