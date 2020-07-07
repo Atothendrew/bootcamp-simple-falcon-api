@@ -39,7 +39,7 @@ _remove_env_file:
 	rm /tmp/simple-falcon.env
 
 _docker_run_api_detached:
-	docker-compose --env-file /tmp/simple-falcon.env up --build --force-recreate -d hello_world
+	docker-compose --env-file /tmp/simple-falcon.env up --build --force-recreate -d
 
 _run_gunicorn_detached:
 	venv/bin/gunicorn --preload --bind=0.0.0.0:$(API_PORT) hello_world.api:api -w 4 --threads 2 -t 900 >/dev/null 2>&1 &
