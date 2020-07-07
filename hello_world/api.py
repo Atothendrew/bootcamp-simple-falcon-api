@@ -3,6 +3,7 @@ __author__ = 'Andrew Williamson <axwilliamson@godaddy.com>'
 import json
 
 import falcon
+from redis import Redis
 
 from hello_world import FalconException
 from hello_world.middleware import RequestIDMiddleware
@@ -32,17 +33,36 @@ class RootURI:
 
 
 class ExampleDataStore():
+    REDIS_KEY = "db_store"
 
     def on_get(self, req, resp):
         """Handles GET requests"""
-        resp.media = "Hello World! You did it!"
-        resp.status = falcon.HTTP_200
+        redis_client = Redis(host="hello_world_redis")
+        value = redis_client.get(self.REDIS_KEY).decode('utf-8')
+        print(value)
+        if not value:
+            resp.status = falcon.HTTP_404
+            resp.media = {"error": "Could not find data in redis"}
+        else:
+            resp.media = json.loads(value)
+            resp.status = falcon.HTTP_200
 
     def on_post(self, req, resp):
         try:
             body = req.media
         except AttributeError:
             raise falcon.HTTPBadRequest("Body must be valid json")
+
+        redis_client = Redis(host="hello_world_redis")
+        current_val = redis_client.get(self.REDIS_KEY)
+        if current_val:
+            value = json.loads(current_val)
+            value.update(**body)
+        else:
+            value = body
+
+        redis_client.set(self.REDIS_KEY, json.dumps(value))
+        redis_client.save()
 
         resp.body = json.dumps(body)
         resp.content_type = falcon.MEDIA_JSON
