@@ -3,10 +3,9 @@ __author__ = 'Andrew Williamson <axwilliamson@godaddy.com>'
 import json
 
 import falcon
-from redis import Redis
 
-from hello_world import FalconException
-from hello_world.middleware import RequestIDMiddleware
+from simple_storage_api import FalconException, get_redis_client
+from simple_storage_api.middleware import RequestIDMiddleware
 
 
 def max_body(limit):
@@ -37,14 +36,13 @@ class ExampleDataStore():
 
     def on_get(self, req, resp):
         """Handles GET requests"""
-        redis_client = Redis(host="hello_world_redis")
-        value = redis_client.get(self.REDIS_KEY).decode('utf-8')
-        print(value)
+        redis_client = get_redis_client()
+        value = redis_client.get(self.REDIS_KEY)
         if not value:
             resp.status = falcon.HTTP_404
             resp.media = {"error": "Could not find data in redis"}
         else:
-            resp.media = json.loads(value)
+            resp.media = json.loads(value.decode('utf-8'))
             resp.status = falcon.HTTP_200
 
     def on_post(self, req, resp):
@@ -53,10 +51,10 @@ class ExampleDataStore():
         except AttributeError:
             raise falcon.HTTPBadRequest("Body must be valid json")
 
-        redis_client = Redis(host="hello_world_redis")
+        redis_client = get_redis_client()
         current_val = redis_client.get(self.REDIS_KEY)
         if current_val:
-            value = json.loads(current_val)
+            value = json.loads(current_val.decode('utf-8'))
             value.update(**body)
         else:
             value = body
