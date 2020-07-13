@@ -5,7 +5,6 @@
 - [CI/CD Boot camp](#ci-cd-boot-camp)
   * [Preface](#preface)
     + [What is Docker?](#what-is-docker)
-      - [Why are we talking about Docker in a CI/CD session?](#why-are-we-talking-about-docker-in-a-ci-cd-session)
   * [Makefile](#makefile)
       - [Make Commands](#make-commands)
 - [Bootcamp Project](#bootcamp-project)
