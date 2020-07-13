@@ -40,7 +40,7 @@ make test
    * You will see each step from your Docker file being executed in your shell
 
 3. Run your image
-   * run `docker run --publish 8000:8000 --name <some unique name> --detach <name of image:version>`
+   * run `docker run --publish 8000:8000 --detach <name of image:version>`
   
 4. Point your browser to http://localhost:8000
 
