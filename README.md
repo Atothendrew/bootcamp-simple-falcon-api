@@ -1,8 +1,41 @@
-# Boot camp Simple Falcon Api 
+# CI/CD Boot camp 
 
-> A sample project used for a Docker workshop
+Simple Falcon API using Docker 
 
-## To run locally: 
+## Preface
+
+> The goal of this boot camp exercise is to provide an overview of one of the components of CI/CD.
+> CI/CD has a lot of components, in this session we are going to focus on how to package an app for deployment.
+
+### Makefile
+> A [Makefile](Makefile) has been provided for you to simplify some of the commands we will be running in this session. For more information, type `make help`.
+
+Commands:
+```bash
+$ make help
+make help
+           Show this
+make stop
+           Stop all processes created by this file
+make run
+           Run the code locally in the background using a virtualenv
+make run-docker
+           Build and package your docker container using docker-compose.yml
+make test
+           Run the unit tests locally using a virtualenv
+make test-docker
+           Run the unit tests in docker and then exit
+```
+
+> Set the `API_PORT` env var before running `make *-docker` commands in order to change the port
+
+### Learning Goals:
+
+1. Learn how to package code into a container using Docker
+2. Learn how multiple Docker containers can live and communicate side-by-side using docker-compose
+3. Learn how to provide an open-source utility container (Redis) to an application using docker-compose
+
+### To run locally without Docker: 
 
 ```
 git clone <this repo>
@@ -231,20 +264,7 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
 
 ----
 
-References: 
+## References
 - https://docs.docker.com/
 
 > Check out Docker Hub for docker images for all kinds of programs
-
-
-TODO:
-
-1. docker run in makefile
-2. Document make commands
-3. Add db backend / tests
-
-Challenge: 
-- add healthchecks for redis
-- Make the API dependent on Redis running
-- Add password based authentication for Redis using Docker
-- update the api to support deleting keys
