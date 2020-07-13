@@ -2,8 +2,8 @@ __author__ = 'Andrew Williamson <axwilliamson@godaddy.com>'
 
 from uuid import uuid4
 
-from hello_world import logger
-from hello_world.context import ctx
+from simple_storage_api import logger
+from simple_storage_api.context import ctx
 
 
 class RequestIDMiddleware:
