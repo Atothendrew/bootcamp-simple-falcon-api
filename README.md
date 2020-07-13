@@ -191,22 +191,22 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
    
 2. Let's get the root path
    ```bash
-    curl -v http://api:8090/
+    curl -v http://api:8000/
    ```  
    
 3. Let's get the db path
    ```bash
-    curl -v http://api:8090/db
+    curl -v http://api:8000/db
    ```  
    
 4. Let's POST some data!
    ```bash
-    curl -i -X POST -H "Content-Type: application/json" -d '{"key":"val"}' http://api:8090/db
+    curl -i -X POST -H "Content-Type: application/json" -d '{"key":"val"}' http://api:8000/db
    ``` 
    
 5. Let's get the db path again
    ```bash
-    curl -v http://api:8090/db
+    curl -v http://api:8000/db
    ```
    
    Do you see your new data in the response? 
