@@ -37,6 +37,15 @@ services:
     networks:
       - api # Same network as our main API so we can talk to it
 
+  redis:
+    container_name: "redis_storage"
+    image: 'bitnami/redis:latest'
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes  # Never do this ;)
+    networks:
+      - api
+
   curl:
     container_name: "api-curl-client"
     restart: always
