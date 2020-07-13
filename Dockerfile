@@ -24,4 +24,4 @@ RUN python setup.py clean --all install clean --all
 
 # Run the command
 ENV API_PORT 8000
-CMD gunicorn --preload --bind=0.0.0.0:$API_PORT hello_world.api:api
+CMD gunicorn --preload --bind=0.0.0.0:$API_PORT simple_storage_api.api:api
