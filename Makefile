@@ -1,9 +1,19 @@
-.PHONY: help env stop run run-docker test test-docker
+.PHONY: help stop run run-docker test test-docker
 
 .DEFAULT: help
 help:
-	@echo "make venv"
-	@echo "	   Build a virtualenv for this project"
+	@echo "make help"
+	@echo "	   Show this"
+	@echo "make stop"
+	@echo "	   Stop all processes created by this file"
+	@echo "make run"
+	@echo "	   Run the code locally in the background using a virtualenv"
+	@echo "make run-docker"
+	@echo "	   Build and package your docker container using docker-compose.yml"
+	@echo "make test"
+	@echo "	   Run the unit tests locally using a virtualenv"
+	@echo "make test-docker"
+	@echo "	   Run the unit tests in docker and then exit"
 
 
 ifeq ($(API_PORT),)
