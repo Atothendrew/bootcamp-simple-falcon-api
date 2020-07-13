@@ -64,43 +64,48 @@ make test
 
 1. First, create a `docker-compose.yml` with the following contents: 
     ```yaml
-       version: "3.5"
-       services:
-          api:
-            container_name: "api-server"
-            build:
-              dockerfile: Dockerfile
-              context: .
-              args:
-                API_PORT: ${API_PORT-8000}
-            ports:
-              - ${API_PORT-8000}:${API_PORT-8000}
-            environment:
-              API_PORT: ${API_PORT-8000}
-            healthcheck:
-              test: ["CMD", "curl", "-f", "http://localhost:${API_PORT-8000}"]
-              interval: 3s
-              timeout: 3s
-              retries: 3
-            networks:
-              - api
-        
-          tests:
-            container_name: "api-tests"
-            restart: always
-            build:
-              dockerfile: Dockerfile
-              context: .
-            environment:
-              API_PORT: "${API_PORT-8000}"
-              API_HOST: api
-            command: >  # another way of defining commands
-              bash -c "pytest simple_storage_api_tests
-              && sleep 60"
-            depends_on:
-              - api  # The tests need the API running in order to work
-            networks:
-              - api # Same network as our main API so we can talk to it
+    version: "3.5"
+    services:
+      api:
+        container_name: "api-server"
+        build:
+          dockerfile: Dockerfile
+          context: .
+          args:
+            API_PORT: ${API_PORT-8000}
+        ports:
+          - ${API_PORT-8000}:${API_PORT-8000}
+        environment:
+          API_PORT: ${API_PORT-8000}
+        healthcheck:
+          test: ["CMD", "curl", "-f", "http://localhost:${API_PORT-8000}"]
+          interval: 3s
+          timeout: 3s
+          retries: 3
+        networks:
+          - api
+    
+      tests:
+        container_name: "api-tests"
+        restart: always
+        build:
+          dockerfile: Dockerfile
+          context: .
+        environment:
+          API_PORT: "${API_PORT-8000}"
+          API_HOST: api
+        command: >  # another way of defining commands
+          bash -c "pytest simple_storage_api_tests
+          && sleep 60"
+        depends_on:
+          - api  # The tests need the API running in order to work
+        networks:
+          - api # Same network as our main API so we can talk to it
+    
+    networks:
+      api:
+        name: simple-falcon-api
+        driver: bridge
     ```
 
     What is this file doing?
