@@ -44,6 +44,8 @@ make test
   
 4. Point your browser to http://localhost:8000
 
+5. Make sure you see `Hello World` on the page
+
 6. Change the text from `Hello World` to something else
 
 7. Rebuild the image and run, make sure you see the updated text!
