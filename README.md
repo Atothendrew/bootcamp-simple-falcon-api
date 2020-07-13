@@ -1,16 +1,53 @@
 # CI/CD Boot camp 
 
-Simple Falcon API using Docker 
+> Simple Falcon API using Docker 
+
+- [CI/CD Boot camp](#ci-cd-boot-camp)
+  * [Preface](#preface)
+    + [What is Docker?](#what-is-docker-)
+      - [Why are we talking about Docker in a CI/CD session?](#why-are-we-talking-about-docker-in-a-ci-cd-session-)
+  * [Makefile](#makefile)
+      - [Make Commands](#make-commands-)
+  * [Step 0: Review Learning Goals](#step-0--review-learning-goals)
+  * [Step 1: Run locally without Docker](#step-1--run-locally-without-docker-)
+  * [Step 2: Build a Docker Container for this project](#step-2--build-a-docker-container-for-this-project)
+  * [Step 3: Create `docker-compose.yml`](#step-3--create--docker-composeyml-)
+  * [Step 4: Add a Redis key-value backend storage container using docker-compose](#step-4--add-a-redis-key-value-backend-storage-container-using-docker-compose)
+  * [Step 5: Use the API!](#step-5--use-the-api-)
+  * [Step 6: Next Steps](#step-6--next-steps)
+  * [References](#references)
+
 
 ## Preface
 
-> The goal of this boot camp exercise is to provide an overview of one of the components of CI/CD.
-> CI/CD has a lot of components, in this session we are going to focus on how to package an app for deployment.
+> The goal of this boot camp exercise is to provide an overview of one of the newer components of CI/CD: containers.
 
-### Makefile
+### What is Docker?
+
+![That's a big question](https://31.media.tumblr.com/a4a72524f0bc49663881898367b5246a/tumblr_ns8pm9eEwN1tq4of6o1_540.gif)
+
+In their own words:
+
+>> Developing apps today requires so much more than writing code. Multiple languages, frameworks, architectures, and discontinuous interfaces between tools for each lifecycle stage creates enormous complexity. Docker simplifies and accelerates your workflow, while giving developers the freedom to innovate with their choice of tools, application stacks, and deployment environments for each project.
+
+Essentially, 
+
+- Docker is a tool that allows you to package code into a re-usable container. 
+- This allows for unparalleled flexibility when it comes to deploying applications that might be differentiated by:
+    - Host Server OS (CentOs vs Ubuntu)
+    - Cloud Provider (AWS vs Google Cloud)
+    - Server Memory/CPU
+- With each container running in an isolated environment, you are able to build application stacks from many singular containers. This allows for really simple Microservice architecture design.  
+- [So much more...](https://www.docker.com/use-cases)
+
+#### Why are we talking about Docker in a CI/CD session?
+
+CI/CD has a lot of components, in this session we are going to focus on how to package an app for continuous delivery (CD).
+
+## Makefile
 > A [Makefile](Makefile) has been provided for you to simplify some of the commands we will be running in this session. For more information, type `make help`.
 
-Commands:
+#### Make Commands:
 ```bash
 $ make help
 make help
@@ -29,13 +66,13 @@ make test-docker
 
 > Set the `API_PORT` env var before running `make *-docker` commands in order to change the port
 
-### Learning Goals:
+## Step 0: Review Learning Goals
 
 1. Learn how to package code into a container using Docker
 2. Learn how multiple Docker containers can live and communicate side-by-side using docker-compose
 3. Learn how to provide an open-source utility container (Redis) to an application using docker-compose
 
-### To run locally without Docker: 
+## Step 1: Run locally without Docker: 
 
 ```
 git clone <this repo>
@@ -46,7 +83,7 @@ make test
 - Navigate to `localhost:8000` in a web browser
 - You should see 'Hello World! You did it!'
  
-## Step 1: Build a Docker Container for this project
+## Step 2: Build a Docker Container for this project
 
 1. Author a [Dockerfile](https://docs.docker.com/engine/reference/builder/)
     > A Dockerfile is a list of instructions that tells Docker how to build your image
@@ -89,7 +126,7 @@ make test
 
 > To stop your image run `docker stop <name of image>`
 
-## Step 2: Create `docker-compose.yml`
+## Step 3: Create `docker-compose.yml`
 
 > Now that you have your image, there has to be a better way to do config than modifying the Dockerfile each time, right?
 > 
@@ -177,7 +214,7 @@ make test
 5. **Medium Challenge**: Add another test to `test_client.py`
 6. **Difficult Challenge**: Run the tests on a different docker network. Hint: Use port forwarding
 
-## Step 3: Add a Redis key-value backend storage container using docker-compose
+## Step 4: Add a Redis key-value backend storage container using docker-compose
 
 Now that you have the basics, let's try something more advanced. Let's add a Redis key-value store to this API.
 
@@ -200,7 +237,7 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
 6. **Medium Challenge**: Update Redis to use a different port, update the API to support this change.
 7. **Hard Challenge**: Add Authentication to Redis (undo `ALLOW_EMPTY_PASSWORD`)
 
-## Step 4: Use the API!
+## Step 5: Use the API!
 
 > Now that we see how easy it is to combine services together, let's take this methodology and use it for everything this project needs. For simplicity, you can add this service to your docker-compose file to get a container ready to run our curl commands:
 
@@ -258,9 +295,22 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
 
     ```
 
-## Step 5: Next Steps
+## Step 6: Next Steps
 
 > Now that you have completed this demo of how to use Docker, spend the rest of the session containerizing the resources you created in the other bootcamp sessions.
+
+> If you master the knowledge in this session you will have a solid foundation for building containerized apps in the future. We highly encourage you to containerize any project that you do from this point and on. 
+
+Being able to package an application into a Docker container gives endless possibilities for deployment. 
+
+For example, you could take this container and deploy it on the following AWS resources: 
+
+- [Elastic Container Service](https://aws.amazon.com/getting-started/hands-on/deploy-docker-containers/) (ECS)
+- [Elastic Kubernetes Service](https://aws.amazon.com/eks/) (EKS)
+- [Fargate](https://aws.amazon.com/fargate/) (serverless containers)
+- [Docker Swarm](https://stelligent.com/2017/02/21/docker-swarm-mode-on-aws/) using EC2
+
+It's also really easy to install to bare metal. As long as Docker exists on the host, you can run this container.
 
 ----
 
