@@ -30,7 +30,7 @@ _pytest_local:
 _pytest_docker:
 	docker-compose --env-file /tmp/simple-falcon.env up --build --force-recreate --exit-code-from tests --abort-on-container-exit tests
 
-_create_env_file: _remove_env_file
+_create_env_file:
 	env | grep API_ >> /tmp/simple-falcon.env
 
 _remove_env_file:

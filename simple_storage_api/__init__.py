@@ -28,3 +28,15 @@ class FalconException(Exception):
 def get_redis_client():
     redis_client = Redis(host=REDIS_HOST)
     return redis_client
+
+def validate_redis():
+    try:
+        c = get_redis_client()
+        if c:
+            c.set(name="test", value="test")
+            c.get("test")
+            c.delete("test")
+            return True
+    except:
+        return False
+

@@ -84,6 +84,7 @@ make test
           interval: 3s
           timeout: 3s
           retries: 3
+        restart: always
         networks:
           - api
     
@@ -125,22 +126,23 @@ make test
 
     ```make test-docker```
     
-    If everything suceeds, you should see this output: 
+    If everything succeeds, you should see this output: 
     ```bash
-    simple_storage_api_tests_1  | ============================= test session starts ==============================
-    simple_storage_api_tests_1  | platform linux -- Python 3.6.8, pytest-5.4.3, py-1.9.0, pluggy-0.13.1
-    simple_storage_api_tests_1  | rootdir: /app
-    simple_storage_api_tests_1  | collected 2 items
-    simple_storage_api_tests_1  | 
-    simple_storage_api_tests_1  | simple_storage_api_tests/test_client.py ..                                      [100%]
-    simple_storage_api_tests_1  | 
-    simple_storage_api_tests_1  | ============================== 2 passed in 0.14s ===============================
-    simple-falcon-api_simple_storage_api_tests_1 exited with code 0
-    Aborting on container exit...
+    api-tests | ============================= test session starts ==============================
+    api-tests | platform linux -- Python 3.6.8, pytest-5.4.3, py-1.9.0, pluggy-0.13.1
+    api-tests | rootdir: /app
+    api-tests | collected 2 items
+    api-tests | 
+    api-tests | simple_storage_api_tests/test_client.py .s                               [100%]
+    api-tests | 
+    api-tests | ========================= 1 passed, 1 skipped in 0.17s =========================
     ```
+   
+  > Why was a test skipped? We aren't done yet! :)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      >
 4. **Easy Challenge**: Change the port using the docker-compose file. Hint: You can set your `API_PORT` environment variable to the port you want before running the `make` or `docker-compose` commands.
-4. **Medium Challenge**: Add another test to `test_client.py`
-4. **Difficult Challenge**: Run the tests on a different docker network. Hint: Use port forwarding
+5. **Medium Challenge**: Add another test to `test_client.py`
+6. **Difficult Challenge**: Run the tests on a different docker network. Hint: Use port forwarding
 
 ## Step 3: Add a Redis key-value backend storage container using docker-compose
 
@@ -162,8 +164,8 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
 3. Rebuild the project using `make run-docker`
 4. Hit `/db`. Notice anything different? That's right! Redis is now working.
 5. **Easy Challenge**: Make the API dependent on the redis container
-5. **Medium Challenge**: Update Redis to use a different port, update the API to support this change.
-6. **Hard Challenge**: Add Authentication to Redis (undo `ALLOW_EMPTY_PASSWORD`)
+6. **Medium Challenge**: Update Redis to use a different port, update the API to support this change.
+7. **Hard Challenge**: Add Authentication to Redis (undo `ALLOW_EMPTY_PASSWORD`)
 
 ## Step 4: Use the API!
 
@@ -208,7 +210,24 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
    ```
    
    Do you see your new data in the response? 
+   
+6. Run the tests again, now that you have Redis working, both tests should pass: 
 
+    ```bash
+    api-tests | ============================= test session starts ==============================
+    api-tests | platform linux -- Python 3.6.8, pytest-5.4.3, py-1.9.0, pluggy-0.13.1
+    api-tests | rootdir: /app
+    api-tests | collected 2 items
+    api-tests | 
+    api-tests | simple_storage_api_tests/test_client.py ..                               [100%]
+    api-tests | 
+    api-tests | ============================== 2 passed in 0.21s ===============================
+
+    ```
+
+## Step 5: Next Steps
+
+> Now that you have completed this demo of how to use Docker, spend the rest of the session containerizing the resources you created in the other bootcamp sessions.
 
 ----
 
