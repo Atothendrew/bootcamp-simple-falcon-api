@@ -4,18 +4,20 @@
 
 - [CI/CD Boot camp](#ci-cd-boot-camp)
   * [Preface](#preface)
-    + [What is Docker?](#what-is-docker)
+    + [What is Docker?](#what-is-docker-)
       - [Why are we talking about Docker in a CI/CD session?](#why-are-we-talking-about-docker-in-a-ci-cd-session-)
   * [Makefile](#makefile)
-      - [Make Commands](#make-commands)
-  * [Step 0: Review Learning Goals](#step-0)
-  * [Step 1: Run locally without Docker](#step-1)
-  * [Step 2: Build a Docker Container for this project](#step-2)
-  * [Step 3: Create `docker-compose.yml`](#step-3)
-  * [Step 4: Add a Redis key-value backend storage container using docker-compose](#step-4)
-  * [Step 5: Use the API!](#step-5)
-  * [Step 6: Next Steps](#step-6)
-  * [References](#references)
+      - [Make Commands:](#make-commands-)
+- [Bootcamp Project](#bootcamp-project)
+    + [Intro](#intro)
+    + [Run Locally](#run-locally)
+    + [Build Container](#build-container)
+    + [Docker Compose](#docker-compose)
+    + [Add Redis Storage](#add-redis-storage)
+    + [Try it out!](#try-it-out-)
+    + [Next Steps](#next-steps)
+    + [Outro](#outro)
+- [References](#references)
 
 
 ## Preface
@@ -66,13 +68,16 @@ make test-docker
 
 > Set the `API_PORT` env var before running `make *-docker` commands in order to change the port
 
-## Step 0: Review Learning Goals
+## Bootcamp Project
+
+### Intro
+> Review Learning Goals
 
 1. Learn how to package code into a container using Docker
 2. Learn how multiple Docker containers can live and communicate side-by-side using docker-compose
 3. Learn how to provide an open-source utility container (Redis) to an application using docker-compose
 
-## Step 1: Run locally without Docker: 
+### Run Locally
 
 ```
 git clone <this repo>
@@ -83,7 +88,7 @@ make test
 - Navigate to `localhost:8000` in a web browser
 - You should see 'Hello World! You did it!'
  
-## Step 2: Build a Docker Container for this project
+### Build Container
 
 1. Author a [Dockerfile](https://docs.docker.com/engine/reference/builder/)
     > A Dockerfile is a list of instructions that tells Docker how to build your image
@@ -126,7 +131,7 @@ make test
 
 > To stop your image run `docker stop <name of image>`
 
-## Step 3: Create `docker-compose.yml`
+### Docker Compose
 
 > Now that you have your image, there has to be a better way to do config than modifying the Dockerfile each time, right?
 > 
@@ -214,7 +219,7 @@ make test
 5. **Medium Challenge**: Add another test to `test_client.py`
 6. **Difficult Challenge**: Run the tests on a different docker network. Hint: Use port forwarding
 
-## Step 4: Add a Redis key-value backend storage container using docker-compose
+### Add Redis Storage
 
 Now that you have the basics, let's try something more advanced. Let's add a Redis key-value store to this API.
 
@@ -237,7 +242,7 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
 6. **Medium Challenge**: Update Redis to use a different port, update the API to support this change.
 7. **Hard Challenge**: Add Authentication to Redis (undo `ALLOW_EMPTY_PASSWORD`)
 
-## Step 5: Use the API!
+### Try it out!
 
 > Now that we see how easy it is to combine services together, let's take this methodology and use it for everything this project needs. For simplicity, you can add this service to your docker-compose file to get a container ready to run our curl commands:
 
@@ -295,9 +300,11 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
 
     ```
 
-## Step 6: Next Steps
+### Next Steps
 
-> Now that you have completed this demo of how to use Docker, spend the rest of the session containerizing the resources you created in the other bootcamp sessions.
+Now that you have completed this demo of how to use Docker, spend the rest of the session containerizing the resources you created in the other bootcamp sessions.
+
+### Outro
 
 > If you master the knowledge in this session you will have a solid foundation for building containerized apps in the future. We highly encourage you to containerize any project that you do from this point and on. 
 
@@ -311,8 +318,6 @@ For example, you could take this container and deploy it on the following AWS re
 - [Docker Swarm](https://stelligent.com/2017/02/21/docker-swarm-mode-on-aws/) using EC2
 
 It's also really easy to install to bare metal. As long as Docker exists on the host, you can run this container.
-
-----
 
 ## References
 - https://docs.docker.com/
