@@ -80,7 +80,7 @@ make test-docker
 
 ```bash
 git clone <this repo>
-cd `bootcamp-single-falcon-api`
+cd bootcamp-simple-falcon-api
 make test
 ```
 
