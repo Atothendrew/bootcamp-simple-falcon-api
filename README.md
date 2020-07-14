@@ -78,7 +78,7 @@ make test-docker
 
 ### Run Locally
 
-```
+```bash
 git clone <this repo>
 cd `bootcamp-single-falcon-api`
 make test
@@ -87,21 +87,32 @@ make test
 - Navigate to [http://localhost:8000](http://localhost:8000) in a web browser
 - You should see 'Hello World! You did it!'
  
+Run this command to stop the process:
+```bash
+make stop
+```
+ 
 ### Build Container
 
 1. Author a [Dockerfile](https://docs.docker.com/engine/reference/builder/)
     > A Dockerfile is a list of instructions that tells Docker how to build your image
-
-    Create a file called `Dockerfile`
-    > Note that every dockerfile is different, feel free to experiment with how you create yours
         
+    - With Dockerfiles, the order you run the commands is very important. Docker will automatically cache the layers (essentially a command) so that they don't need to be rebuilt each time. 
+        - If you add, change, or remove a command in the middle of the file, any line after it will need to be rebuilt.
+        - If you add, change, or remove a command at the top of the file, the entire image will be rebuilt
+        - If you add, change, or remove a command at the bottom, then anything already built will be cached and the new layer will be added to the image.
+          
+    - You can turn this off by adding `--no-cache` to any docker build command. This will cause the entire image to be rebuilt.
+    
+    > Every dockerfile is different, feel free to experiment with how you create yours.
+                  
     1. Select a base image using a `FROM` statement. Make sure the base image has python! We'd recommend `FROM python:3.6`.
     2. `RUN` a command to update packages in your image. This depends on the distro, but most distros use `apt-get update -y`.
     3. `RUN` create a directory to store your code
     4. `COPY` your local directory into the directory you created in the step above.
-    5. `RUN` pip install the package requirements
+    5. `RUN` `pip install -r <dir_you_created>/requirements.txt`
     6. Change your `WORKDIR` to be the directory you created in the steps above.
-    7. Install this project into the container `RUN python setup.py clean --all install clean --all`
+    7. Install this project into the container `RUN python setup.py install`
     8. Create an `ENV` var for the API port like so: ```ENV API_PORT 8000```
     9. Add the final piece to run the API
      
@@ -194,9 +205,9 @@ make test
 
     ```make run-docker```
     
-    This will build your image and run it in the background. To stop it, run `make stop`.
+    This will build your image and run it in the background, and then start tailing the logs for it. To quit out of the logs, type `ctrl-c`. To stop the containers created from `make run-docker`, run `make stop`.
     
-3. Try running tests! 
+3. The default container will run the tests every minute or so. You can also manually run them with this command:
 
     ```make test-docker```
     
@@ -211,9 +222,9 @@ make test
     api-tests | 
     api-tests | ========================= 1 passed, 1 skipped in 0.17s =========================
     ```
-   
-  > Why was a test skipped? We aren't done yet! :)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      >
+    > To quit out of this, you might need to type `ctrl-c`
+    > Why was a test skipped? We aren't done yet! :)
+                                                                                                                                                                                                        
 4. **Easy Challenge**: Change the port using the docker-compose file. Hint: You can set your `API_PORT` environment variable to the port you want before running the `make` or `docker-compose` commands.
 5. **Medium Challenge**: Add another test to `test_client.py`
 6. **Difficult Challenge**: Run the tests on a different docker network. Hint: Use port forwarding

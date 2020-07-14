@@ -19,7 +19,7 @@ def test_simple_storage_api():
 @pytest.mark.skipif(validate_redis() == False, reason="Redis is not available yet (or it still needs to be added to docker-compose)")
 def test_db_post():
     key = os.environ.get("POST_KEY", "I was created from")
-    val = os.environ.get("POST_VALUE", "I was created from")
+    val = os.environ.get("POST_VALUE", "tests")
     fake_json_data = {
         key : val
     }
