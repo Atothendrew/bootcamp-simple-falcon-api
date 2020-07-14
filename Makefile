@@ -60,10 +60,11 @@ _setup_virtual_env:
 		python3 -m pip install --user --upgrade pip && python3 -m venv venv; \
 	fi
 	venv/bin/pip install -r requirements.txt
-	venv/bin/python setup.py clean --all install clean --all
+	venv/bin/python setup.py install
+	rm -rf build dist simple_falcon_api.egg-info
 
 _docker_stop_api_detached:
-	docker-compose down || echo "Eyes up, check docker logs"
+	docker-compose down || echo "Eyes up, check docker logs. If you don't have a container running, this error is ok."
 
 _kill_gunicorn:
 	pkill -9 -f "venv/bin/gunicorn" >/dev/null 2>&1 && echo "killed local gunicorn" || echo "No local gunicorn process"
