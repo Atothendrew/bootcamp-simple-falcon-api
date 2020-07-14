@@ -321,9 +321,13 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
 
 ### Next Steps
 
-Now that you have completed this demo of how to use Docker, spend the rest of the session containerizing the resources you created in the other bootcamp sessions.
+- Optionally complete the challenges on this page to reinforce your learnings.
+- Containerize your group project.
+- Create a docker-compose for your group project.
 
 ### Outro
+
+Now that you have completed this demo of how to use Docker, spend the rest of the session containerizing the resources you created in the other bootcamp sessions.
 
 > If you master the knowledge in this session you will have a solid foundation for building containerized apps in the future. We highly encourage you to containerize any project that you do from this point and on. 
 
