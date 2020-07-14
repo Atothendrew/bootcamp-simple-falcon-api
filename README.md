@@ -84,7 +84,7 @@ cd `bootcamp-single-falcon-api`
 make test
 ```
 
-- Navigate to `localhost:8000` in a web browser
+- Navigate to [http://localhost:8000](http://localhost:8000) in a web browser
 - You should see 'Hello World! You did it!'
  
 ### Build Container
