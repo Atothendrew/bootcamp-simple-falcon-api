@@ -271,34 +271,41 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
       - api
 ```
 
-1. Attach to the container running curl
+1. Rebuild the containers
+   ```bash
+    make run-docker
+   ```
+   
+   `<ctrl-c>` out of the logs to move on.
+
+2. Attach to the container running curl
    ```bash
     docker attach api-curl-client
    ```
    
-2. Let's get the root path
+3. Let's get the root path
    ```bash
     curl -v http://api:8000/
    ```  
    
-3. Let's get the db path
+4. Let's get the db path
    ```bash
     curl -v http://api:8000/db
    ```  
    
-4. Let's POST some data!
+5. Let's POST some data!
    ```bash
     curl -i -X POST -H "Content-Type: application/json" -d '{"key":"val"}' http://api:8000/db
    ``` 
    
-5. Let's get the db path again
+6. Let's get the db path again
    ```bash
     curl -v http://api:8000/db
    ```
    
    Do you see your new data in the response? 
    
-6. Run the tests again, now that you have Redis working, both tests should pass: 
+7. Run the tests again, now that you have Redis working, both tests should pass: 
 
     ```bash
     api-tests | ============================= test session starts ==============================
