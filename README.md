@@ -154,35 +154,35 @@ make stop
     version: "3.5"
     services:
       api:
-        container_name: "api-server"
-        build:
-          dockerfile: Dockerfile
-          context: .
+        container_name: "api-server"  # Name this container so we can stop it with a name
+        restart: always  # If the api dies for any reason, restart it automatically
+        build:  # The image for this project is a Dockerfile that needs to be built
+          dockerfile: Dockerfile  # Location of file
+          context: .  # When the Dockerfile is running, what is the local directory it should have access to?
           args:
-            API_PORT: ${API_PORT-8000}
+            API_PORT: ${API_PORT-8000}  # What port should we run on?
         ports:
-          - ${API_PORT-8000}:${API_PORT-8000}
+          - ${API_PORT-8000}:${API_PORT-8000}  # Open the port we are running on
         environment:
-          API_PORT: ${API_PORT-8000}
+          API_PORT: ${API_PORT-8000}  # Set an env var with the port we are running on
         healthcheck:
-          test: ["CMD", "curl", "-f", "http://localhost:${API_PORT-8000}"]
-          interval: 3s
-          timeout: 3s
-          retries: 3
-        restart: always
-        networks:
+          test: ["CMD", "curl", "-f", "http://localhost:${API_PORT-8000}"]  # Run a curl command against the api to make sure it's alive
+          interval: 3s  # Run every 3 seconds
+          timeout: 3s  # Timeout the call after 3 seconds
+          retries: 3  # Consider the app unhealthy if it fails this amount of times in a row
+        networks:  # Map it to a network that other containers will share
           - api
     
       tests:
-        container_name: "api-tests"
-        restart: always
+        container_name: "api-tests"  # Name this container so we can stop it with a name
+        restart: always  # If the api dies for any reason, restart it automatically
         build:
           dockerfile: Dockerfile
           context: .
         environment:
           API_PORT: "${API_PORT-8000}"
           API_HOST: api
-        command: >  # another way of defining commands
+        command: >  # another way of defining commands, the command for this container is running pytest and sleeping for 60 seconds
           bash -c "pytest simple_storage_api_tests
           && sleep 60"
         depends_on:
@@ -194,6 +194,7 @@ make stop
       api:
         name: simple-falcon-api
         driver: bridge
+   
     ```
 
     What is this file doing?
@@ -237,15 +238,16 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
 2. Add this to the `services` section of your docker-compose.yml:
     > This will create a container for redis, and attach it to the network that our API is on. Now they can communicate with each-other by service name! For example, the API container can now hit redis at the default port (6379) but we can't! Why? Because we are not opening that port to the outside world using Docker. Pretty cool right?
 
-    ```bash
+    ```yaml
       redis:
         container_name: "redis_storage"
-        image: 'bitnami/redis:latest'
+        image: 'bitnami/redis:latest'  # Using open source image
         environment:
           - ALLOW_EMPTY_PASSWORD=yes  # Never do this ;)
         networks:
           - api
     ```
+   
 3. Rebuild the project using `make run-docker`
 4. Hit `/db`. Notice anything different? That's right! Redis is now working.
 5. **Easy Challenge**: Make the API dependent on the redis container
@@ -256,7 +258,7 @@ Now that you have the basics, let's try something more advanced. Let's add a Red
 
 > Now that we see how easy it is to combine services together, let's take this methodology and use it for everything this project needs. For simplicity, you can add this service to your docker-compose file to get a container ready to run our curl commands:
 
-```bash
+```yaml
   curl:
     container_name: "api-curl-client"
     image: curlimages/curl:7.71.0  # Official curl container
